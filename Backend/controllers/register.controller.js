@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const regRepo = require('../repo/registerRepository');
 const jwt = require('jwt-simple');
+const bcrypt = require('bcrypt-nodejs');
 
 class RegisterController {
 
@@ -18,27 +19,28 @@ class RegisterController {
 	}
 
 	async loginUser(req, res) {
-		const userData = req.body;
+		const loginData = req.body;
 
-		const user = await regRepo.findUser(userData.email);
+		const user = await regRepo.findUser(loginData.email);
 		if (!user)
 			return res.status(401).send({ message: 'Email or Password invalid' });
 
-		if (userData.pwd != user.pwd)
-			return res.status(401).send({ message: 'Email or Password invalid' });
+		bcrypt.compare(loginData.pwd, user.pwd, (err, isMatch) => {
+			if (!isMatch)
+			  return res.status(401).send({ message: 'Email or Password invalid' });
 
-		const payload = {};
+			const payload = {};
 
-		const token = jwt.encode(payload, '123');
+			const token = jwt.encode(payload, '123');
 
-		res.status(200).send({token: token});
+			res.status(200).send({token: token});
+		});
 	}
 
 	init() {
-		this.router.post('/', this.register);
-		this.router.post('/login', this.loginUser);
+		this.router.post('/', this.register.bind(this));
+		this.router.post('/login', this.loginUser.bind(this));
 	}
 }
 const register = new RegisterController(router);
-register.init();
 module.exports = register.router;

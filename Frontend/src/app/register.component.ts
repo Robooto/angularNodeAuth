@@ -21,6 +21,15 @@ import { AuthService } from './auth.service';
 				<mat-form-field>
 						<input [(ngModel)]="registerData.pwd" name="pwd" matInput placeholder="password" type="password" />
 				</mat-form-field>
+				<br>
+				<mat-form-field>
+						<input [(ngModel)]="registerData.name" name="name" matInput placeholder="name" />
+				</mat-form-field>
+				<br>
+				<mat-form-field style="width:100%;">
+						<textarea [(ngModel)]="registerData.description" name="description" matInput placeholder="description"></textarea>
+				</mat-form-field>
+				<br>
 				<button mat-raised-button color="primary" (click)="post()">Register</button>
 		</form>
 	</mat-card>

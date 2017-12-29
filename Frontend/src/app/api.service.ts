@@ -12,4 +12,12 @@ export class ApiService {
     return this.http.get('http://localhost:3000/posts');
   }
 
+  getUsers() {
+    return this.http.get('http://localhost:3000/posts/users');
+  }
+
+  getUser(id) {
+    return this.http.get(`http://localhost:3000/posts/users/${id}`);
+  }
+
 }
