@@ -5,19 +5,19 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ApiService {
-
+  basePath: string = 'http://localhost:3000';
   constructor(private http: HttpClient) { }
 
   getMessages() {
-    return this.http.get('http://localhost:3000/posts');
+    return this.http.get(`${this.basePath}/posts`);
   }
 
   getUsers() {
-    return this.http.get('http://localhost:3000/posts/users');
+    return this.http.get(`${this.basePath}/posts/users`);
   }
 
   getUser(id) {
-    return this.http.get(`http://localhost:3000/posts/users/${id}`);
+    return this.http.get(`${this.basePath}/posts/users/${id}`);
   }
 
 }

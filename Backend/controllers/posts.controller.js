@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const regRepo = require('../repo/registerRepository');
+const Post = require('../models/Post');
 
 class PostsController {
 
@@ -15,6 +16,11 @@ class PostsController {
             {message: 'hi'}
         ];
         res.send(posts);
+    }
+
+    savePost(req, res) {
+        const post = new Post(req.body);
+        
     }
 
     async getUsers(req, res) {
@@ -33,6 +39,7 @@ class PostsController {
         this.router.get('/', this.getPosts.bind(this));
         this.router.get('/users', this.getUsers.bind(this));
         this.router.get('/users/:id', this.getUser.bind(this));
+        this.router.post('/', this.savePost.bind(this));
     }
 
     handleError(err, res) {
