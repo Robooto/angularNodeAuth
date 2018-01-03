@@ -4,7 +4,7 @@ import { Component, OnInit, Input } from '@angular/core';
   selector: 'app-messages',
   template: `
     <div *ngFor="let item of messages">
-      <mat-card >{{item?.message}}</mat-card>
+      <mat-card >{{item?.msg}}</mat-card>
     </div>
   `,
   styles: []

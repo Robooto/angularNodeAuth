@@ -17,11 +17,22 @@ import { ActivatedRoute } from '@angular/router';
         <mat-card-content>
             <profile-list [profile]="profile$ | async"></profile-list>
         </mat-card-content>		
+  </mat-card>
+  <mat-card>
+		<mat-card-header>
+			<mat-card-title>
+				<h4>Posts</h4>
+			</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-messages [messages]="messages$ | async"></app-messages>
+        </mat-card-content>		
 	</mat-card>
   `,
 })
 export class ProfileComponent implements OnInit {
-    profile$: Observable<any>;
+  messages$: Observable<any>;
+  profile$: Observable<any>;
   constructor(
       private apiService: ApiService,
       private activatedRoute: ActivatedRoute
@@ -31,6 +42,7 @@ export class ProfileComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
         let id = params.get('id');
         this.profile$ = this.apiService.getUser(id);
+        this.messages$ = this.apiService.getMessages(id);
     });
     
   }

@@ -10,16 +10,15 @@ class PostsController {
         this.init();
     }
 
-    getPosts(req, res) {
-        const posts = [
-            {message: 'hello'},
-            {message: 'hi'}
-        ];
+    async getPosts(req, res) {
+        const posts = await postRepo.getPosts(req.params.id)
+            .catch((err) => this.handleError(err, res));
         res.send(posts);
     }
 
     async savePost(req, res) {
         const post = req.body;
+        post.author = '5a4d5c21d10e3a32c0516bbd';
         const savedPost = await postRepo.savePost(post)
             .catch((err) => this.handleError(err, res));
         res.send(savedPost);
@@ -38,9 +37,9 @@ class PostsController {
     }
 
     init() {
-        this.router.get('/', this.getPosts.bind(this));
         this.router.get('/users', this.getUsers.bind(this));
         this.router.get('/users/:id', this.getUser.bind(this));
+        this.router.get('/:id', this.getPosts.bind(this));
         this.router.post('/', this.savePost.bind(this));
     }
 
