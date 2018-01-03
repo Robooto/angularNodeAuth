@@ -11,11 +11,11 @@ class RegisterController {
 		this.init();
 	}
 
-	register(req, res) {
+	async register(req, res) {
 		const userData = req.body;
-		regRepo.saveUser(userData)
-			.then(doc => res.status(200))
-			.catch(err => res.status(500));
+		const user = regRepo.saveUser(userData)
+			.catch(err => res.status(500).send({ error: err }));
+		res.send(user);
 	}
 
 	async loginUser(req, res) {

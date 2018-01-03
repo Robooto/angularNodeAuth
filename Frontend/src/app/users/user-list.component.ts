@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-user-list',
   template: `
     <div *ngFor="let user of users">
       <mat-card [routerLink]="['/profile', user._id]" style="cursor:pointer;">{{user?.name}}</mat-card>
@@ -9,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
   `,
   styles: []
 })
-export class UsersComponent implements OnInit {
+export class UserListComponent implements OnInit {
   @Input() users: any[];
   constructor() { }
 

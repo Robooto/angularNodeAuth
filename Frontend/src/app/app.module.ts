@@ -12,12 +12,16 @@ import { RegisterComponent } from './register.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 import { AuthService } from './auth.service';
-import { UsersComponent } from './users.component';
+import { UserListComponent } from './users/user-list.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileListComponent } from './profile/profile-list.component';
+import { UserComponent } from './users/user.component';
+import { PostComponent } from './post.component';
 
 const routes = [
+  { path: '', component: PostComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'users', component: UserComponent },
   { path: 'login', component: LoginComponent },
   { path: 'profile/:id', component: ProfileComponent}
 ];
@@ -34,9 +38,11 @@ const materialMods = [
   declarations: [
     AppComponent,
     MessagesComponent,
-    UsersComponent,
+    UserComponent,
+    UserListComponent,
     ProfileComponent,
     ProfileListComponent,
+    PostComponent,
     RegisterComponent,
     LoginComponent
   ],

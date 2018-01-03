@@ -12,6 +12,10 @@ export class ApiService {
     return this.http.get(`${this.basePath}/posts`);
   }
 
+  saveMessage(message) {
+    return this.http.post(`${this.basePath}/posts`, message);
+  }
+
   getUsers() {
     return this.http.get(`${this.basePath}/posts/users`);
   }

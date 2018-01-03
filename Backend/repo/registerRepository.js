@@ -3,10 +3,10 @@ const User = require('../models/User');
 
 class RegisterRepository {
     
-    saveUser(userData) {
-        const user = new User(userData);
-
-        return user.save();
+    async saveUser(userData) {
+        const userModel = new User(userData);
+        const user = await userModel.save();
+        return user;
     }
 
     async findUser(email) {

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const regRepo = require('../repo/registerRepository');
-const Post = require('../models/Post');
+const postRepo = require('../repo/postRepository');
 
 class PostsController {
 
@@ -18,9 +18,11 @@ class PostsController {
         res.send(posts);
     }
 
-    savePost(req, res) {
-        const post = new Post(req.body);
-        
+    async savePost(req, res) {
+        const post = req.body;
+        const savedPost = await postRepo.savePost(post)
+            .catch((err) => this.handleError(err, res));
+        res.send(savedPost);
     }
 
     async getUsers(req, res) {
