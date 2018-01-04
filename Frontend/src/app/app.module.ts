@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCardModule, MatToolbarModule, MatInputModule, MatListModule} from '@angular/material';
 
@@ -17,6 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfileListComponent } from './profile/profile-list.component';
 import { UserComponent } from './users/user.component';
 import { PostComponent } from './post.component';
+import { AuthInterceptorService } from './authInterceptor.service';
 
 const routes = [
   { path: '', component: PostComponent },
@@ -54,7 +55,11 @@ const materialMods = [
     ...materialMods,
     RouterModule.forRoot(routes)
   ],
-  providers: [ApiService, AuthService],
+  providers: [
+    ApiService, 
+    AuthService, 
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

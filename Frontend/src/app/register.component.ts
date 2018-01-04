@@ -44,10 +44,6 @@ export class RegisterComponent implements OnInit {
 	
 	post() {
 		this.authService
-		.sendUserRegistration(this.registerData)
-		.subscribe(
-			data => console.log(data), 
-			err => console.log(err)
-		);
+		.sendUserRegistration(this.registerData);
 	}
 }

@@ -6,18 +6,38 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class AuthService {
   basePath: string = 'http://localhost:3000';
+  TOKEN_KEY = 'token';
+
   constructor(private http: HttpClient) { }
 
+  get token() {
+    return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  get isAuthenticated() {
+    return !!localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  logout() {
+    localStorage.removeItem(this.TOKEN_KEY);
+  }
+
   sendUserRegistration(registerData) {
-    return this.http.post(`${this.basePath}/register`, registerData, { observe: 'response', responseType: 'text'})
-    .pipe(map((res: HttpResponse<any>) => res.status === 200))
+    return this.http.post<any>(`${this.basePath}/register`, registerData).subscribe(
+      data => this.saveToken(data.token),
+      err => console.log(err)
+    );
   }
 
   loginUser(loginData) {
-    this.http.post(`${this.basePath}/register/login`, loginData).subscribe(
-        (data: any) => localStorage.setItem('token', data.token),
+    this.http.post<any>(`${this.basePath}/register/login`, loginData).subscribe(
+        data => this.saveToken(data.token),
         err => console.log(err)
     );
+  }
+
+  saveToken(token) {
+    localStorage.setItem(this.TOKEN_KEY, token)
   }
 
 }

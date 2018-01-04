@@ -15,7 +15,14 @@ class RegisterController {
 		const userData = req.body;
 		const user = regRepo.saveUser(userData)
 			.catch(err => res.status(500).send({ error: err }));
-		res.send(user);
+			
+		const payload = {
+			sub: user._id
+		};
+
+		const token = jwt.encode(payload, '123');
+
+		res.status(200).send({token: token});
 	}
 
 	async loginUser(req, res) {
@@ -29,7 +36,9 @@ class RegisterController {
 			if (!isMatch)
 			  return res.status(401).send({ message: 'Email or Password invalid' });
 
-			const payload = {};
+			const payload = {
+				sub: user._id
+			};
 
 			const token = jwt.encode(payload, '123');
 
